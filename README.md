@@ -11,42 +11,15 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 - Error handling and user-friendly responses
 
 ---
-```mermaid
-flowchart TD
-  A --> B
-  B -->|🎙️ Voice| C
-  B -->|✍️ Text| G
-  C --> D
-  D --> E
-  E -->|✅ Needs Cleaning| F
-  E -->|🚫 Clean| H
-  F --> H
-  G --> H
-  %% Lead Agent components
-  subgraph 🧩 Components
-    H -- 🧠 memory --> I
-    H -- 🤖 model --> J
-    H -- 🔎 tool --> K
-    H -- 🔗 tool --> L
-  end
-  %% Output paths
-  H --> M
-  H --> N
-```
----
 
-# 🧩 Workflow Details
+# 🧩 Workflow Design
 
 This workflow is designed to handle Telegram-based input and process both voice and text messages using AI-powered tools. It includes modular components for transcription, cleaning, lead generation, and error handling.
-
----
 
 ## 🔹 Input Handling
 
 - **Telegram Trigger**: Receives incoming messages from Telegram.
 - **Voice or Text Switch Node**: Determines whether the message is a voice or text input and routes accordingly.
-
----
 
 ## 🔊 Voice Processing Path
 
@@ -56,13 +29,9 @@ This workflow is designed to handle Telegram-based input and process both voice 
 - **Clean Transcription Node**: Removes timestamps, annotations, and other noise from the transcription.
 - **Lead Agent**: Receives the cleaned text and processes the request.
 
----
-
 ## 💬 Text Processing Path
 
 - **Text Node**: Directly forwards text messages to the Lead Agent for processing.
-
----
 
 ## 🧠 Lead Agent
 
@@ -75,14 +44,10 @@ The Lead Agent is the core AI component responsible for understanding and respon
 - **leadScraping Tool**: Scrapes leads based on user-defined criteria.
 - **leadResearch Tool**: Researches LinkedIn profiles for enriched lead data.
 
----
-
 ## 📤 Output Handling
 
 - **Response Node**: Sends successful responses back to the user.
 - **Error Response Node**: Handles and returns error messages when something goes wrong.
-
----
 
 ## 🌟 Key Features
 
@@ -92,8 +57,6 @@ The Lead Agent is the core AI component responsible for understanding and respon
 - **Modular Design**: Each component is isolated for easy updates and maintenance.
 - **Error Handling**: Dedicated error path ensures graceful failure management.
 - **Memory Support**: Maintains context across interactions for smarter responses.
-
----
 
 ## 🛠️ Customization Points
 
