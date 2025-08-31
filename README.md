@@ -10,6 +10,70 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 - Memory management for conversation context
 - Error handling and user-friendly responses
 
+## Workflow Diagram
+
+```mermaid
+flowchart TD
+    %% Define styles
+    classDef start fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef process fill:#ffc,stroke:#333,stroke-width:2px;
+    classDef decision fill:#cfc,stroke:#333,stroke-width:2px;
+    classDef end fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef component fill:#fcf,stroke:#333,stroke-width:1px;
+
+    %% Define all nodes with descriptions
+    A[Telegram Trigger\nReceives messages from Telegram]:::start
+    B{"Voice or Text\nSwitch node"}:::decision
+    C[Download File\nDownloads voice message file]:::process
+    D[Transcribe a recording\nUses Google Gemini to transcribe]:::process
+    E{"Check for noise\nDetects if transcription needs cleaning"}:::decision
+    F[Clean transcription\nRemoves timestamps and annotations]:::process
+    G[Text\nHandles text messages directly]:::process
+    H["Lead Agent\nMain AI agent that processes requests"]:::process
+    I[Simple Memory\nStores conversation context]:::component
+    J[Google Gemini Chat Model\nProvides AI responses]:::component
+    K[leadScraping Tool\nScrapes leads based on criteria]:::component
+    L[leadResearch Tool\nResearched LinkedIn profiles]:::component
+    M[Response\nSends back successful responses]:::end
+    N[Error Response\nHandles error cases]:::end
+
+    %% Voice path
+    A --> B
+    B -->|Voice| C
+    C --> D
+    D --> E
+    E -->|Needs Cleaning| F
+    E -->|Clean| H
+    F --> H
+
+    %% Text path
+    B -->|Text| G
+    G --> H
+
+    %% Lead Agent components
+    subgraph LeadAgentComponents["Lead Agent Components"]
+        direction TB
+        H -- ai_memory --> I
+        H -- ai_languageModel --> J
+        H -- ai_tool --> K
+        H -- ai_tool --> L
+    end
+
+    %% Response paths
+    H --> M
+    H --> N
+
+    %% Add a legend
+    legend
+      |<b>Legend</b>|
+      |Start: Telegram input|
+      |Decision: Switch/routers|
+      |Process: Main workflow steps|
+      |Component: Agent subsystems|
+      |End: Output nodes|
+    end
+```
+
 ## System Requirements
 
 - n8n workflow automation tool
