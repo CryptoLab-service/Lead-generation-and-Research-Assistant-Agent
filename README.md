@@ -13,14 +13,6 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 ---
 ```mermaid
 flowchart TD
-  %% Define styles
-  classDef start fill:#f9f,stroke:#333;
-  classDef process fill:#ffc,stroke:#333;
-  classDef decision fill:#cfc,stroke:#333;
-  classDef output fill:#bbf,stroke:#333;
-  classDef component fill:#fcf,stroke:#333;
-
-  %% Define all nodes
   A[📨 Telegram Trigger<br>Receives messages]:::start
   B{🧭 Voice or Text?<br>Switch node}:::decision
   C[📥 Download File<br>Voice message file]:::process
@@ -35,7 +27,6 @@ flowchart TD
   L[🔗 leadResearch Tool<br>LinkedIn profile lookup]:::component
   M[📤 Response<br>Successful output]:::output
   N[❗ Error Response<br>Handles failures]:::output
-
   %% Workflow connections
   A --> B
   B -->|🎙️ Voice| C
@@ -46,7 +37,6 @@ flowchart TD
   E -->|🚫 Clean| H
   F --> H
   G --> H
-
   %% Lead Agent components
   subgraph 🧩 Components
     H -- 🧠 memory --> I
@@ -54,7 +44,6 @@ flowchart TD
     H -- 🔎 tool --> K
     H -- 🔗 tool --> L
   end
-
   %% Output paths
   H --> M
   H --> N
