@@ -13,6 +13,33 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 ## Workflow Diagram
 
 ```mermaid
+flowchart TD
+    %% Define styles
+    classDef start fill:#f9f,stroke:#333,stroke-width:2px;
+    classDef process fill:#ffc,stroke:#333,stroke-width:2px;
+    classDef decision fill:#cfc,stroke:#333,stroke-width:2px;
+    classDef end fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef component fill:#fcf,stroke:#333,stroke-width:1px;
+
+    %% Define all nodes
+    A[Telegram Trigger\nReceives messages\nfrom Telegram]:::start
+    B{"Voice or Text\nSwitch node"}:::decision
+    C[Download File\nDownloads voice\nmessage file]:::process
+    D[Transcribe a recording\nUses Google Gemini\nto transcribe]:::process
+    E{"Check for noise\nDetects if\ntranscription needs\ncleaning"}:::decision
+    F[Clean transcription\nRemoves timestamps\nand annotations]:::process
+    G[Text\nHandles text\nmessages directly]:::process
+    LogCleaned[Log Cleaned Input\nStores cleaning status]:::process
+    LogRaw[Log Raw Input\nStores raw input status]:::process
+    H["Lead Agent\nMain AI agent that\nprocesses requests"]:::process
+    RetryTool[Retry Failed Tool\nRetries scraping/research tool]:::process
+    I[Simple Memory\nStores conversation context]:::component
+    J[Google Gemini Chat Model\nProvides AI responses]:::component
+    K[leadScraping Tool\nScrapes leads based\non criteria]:::component
+    L[leadResearch Tool\nResearched LinkedIn\nprofiles]:::component
+    M[Response\nSends back successful\nresponses]:::end
+    N[Error Response\nHandles error cases]:::end
+
     %% Voice path
     A --> B
     B -->|Voice| C
@@ -57,6 +84,9 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
     %% Position the legend at bottom
     note1 -.- note2 -.- note3 -.- note4 -.- note5
 ```
+
+---
+
 # 🧩 Workflow Details
 
 This workflow is designed to handle Telegram-based input and process both voice and text messages using AI-powered tools. It includes modular components for transcription, cleaning, lead generation, and error handling.
