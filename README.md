@@ -13,21 +13,6 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 ---
 ```mermaid
 flowchart TD
-  A[📨 Telegram Trigger<br>Receives messages]:::start
-  B{🧭 Voice or Text?<br>Switch node}:::decision
-  C[📥 Download File<br>Voice message file]:::process
-  D[🗣️ Transcribe Audio<br>Google Gemini]:::process
-  E{🔍 Needs Cleaning?<br>Check for noise}:::decision
-  F[🧹 Clean Transcription<br>Remove timestamps & noise]:::process
-  G[💬 Text Input<br>Direct message handling]:::process
-  H[🧠 Lead Agent<br>Main AI processor]:::process
-  I[🗂️ Memory<br>Conversation context]:::component
-  J[🤖 Chat Model<br>Google Gemini]:::component
-  K[🔎 leadScraping Tool<br>Search leads by criteria]:::component
-  L[🔗 leadResearch Tool<br>LinkedIn profile lookup]:::component
-  M[📤 Response<br>Successful output]:::output
-  N[❗ Error Response<br>Handles failures]:::output
-  %% Workflow connections
   A --> B
   B -->|🎙️ Voice| C
   B -->|✍️ Text| G
