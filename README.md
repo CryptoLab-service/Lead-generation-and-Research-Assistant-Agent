@@ -1,15 +1,3 @@
-``` mermaid 
-flowchart TD
-  A[⏰ Schedule Trigger<br>Every 5–10 mins] --> B[📄 Read Endpoints<br>from Google Sheets]
-  B --> C[🔁 Split In Batches<br>Iterate Each Endpoint]
-  C --> D[🌐 HTTP Request<br>Send API Call]
-  D --> E[🧮 Evaluate Response<br>Status Code & Latency]
-  E --> F{❌ Issue Detected?}
-  F -- Yes --> G[🚨 Alert Team<br>Slack / Telegram / SMS]
-  F -- No --> H[✅ All Good<br>Continue Monitoring]
-  G --> I[📝 Log Incident<br>to API Health Log Sheet]
-  H --> I
-```
 # Lead Generation and Research Assistant Agent
 
 An AI-powered assistant for lead generation and research, integrated with Telegram for voice and text interactions, with Google Gemini for transcription and chat capabilities.
@@ -22,57 +10,55 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 - Memory management for conversation context
 - Error handling and user-friendly responses
 
-## Workflow Diagram
-
+---
 ```mermaid
 flowchart TD
-    %% Define styles
-    classDef start fill:#f9f,stroke:#333;
-    classDef process fill:#ffc,stroke:#333;
-    classDef decision fill:#cfc,stroke:#333;
-    classDef end fill:#bbf,stroke:#333;
-    classDef component fill:#fcf,stroke:#333;
+  %% Define styles
+  classDef start fill:#f9f,stroke:#333;
+  classDef process fill:#ffc,stroke:#333;
+  classDef decision fill:#cfc,stroke:#333;
+  classDef output fill:#bbf,stroke:#333;
+  classDef component fill:#fcf,stroke:#333;
 
-    %% Define all nodes with descriptions
-    A[Telegram Trigger<br>Receives messages]:::start
-    B{Vice or Text?<br>Switch node}:::decision
-    C[Download File<br>Voice file]:::process
-    D[Transcribe<br>Google Gemini]:::process
-    E{Needs Cleaning?<br>Check noise}:::decision
-    F[Clean Text<br>Remove timestamps]:::process
-    G[Text Input<br>Direct handling]:::process
-    H[Lead Agent<br>Main AI]:::process
-    I[Memory<br>Conversation context]:::component
-    J[Chat Model<br>Google Gemini]:::component
-    K[leadScraping<br>Search tool]:::component
-    L[leadResearch<br>LinkedIn tool]:::component
-    M[Response<br>Success output]:::end
-    N[Error<br>Response]:::end
+  %% Define all nodes
+  A[📨 Telegram Trigger<br>Receives messages]:::start
+  B{🧭 Voice or Text?<br>Switch node}:::decision
+  C[📥 Download File<br>Voice message file]:::process
+  D[🗣️ Transcribe Audio<br>Google Gemini]:::process
+  E{🔍 Needs Cleaning?<br>Check for noise}:::decision
+  F[🧹 Clean Transcription<br>Remove timestamps & noise]:::process
+  G[💬 Text Input<br>Direct message handling]:::process
+  H[🧠 Lead Agent<br>Main AI processor]:::process
+  I[🗂️ Memory<br>Conversation context]:::component
+  J[🤖 Chat Model<br>Google Gemini]:::component
+  K[🔎 leadScraping Tool<br>Search leads by criteria]:::component
+  L[🔗 leadResearch Tool<br>LinkedIn profile lookup]:::component
+  M[📤 Response<br>Successful output]:::output
+  N[❗ Error Response<br>Handles failures]:::output
 
-    %% Connections
-    A --> B
-    B -->|Voice| C
-    B -->|Text| G
-    C --> D
-    D --> E
-    E -->|Yes| F
-    E -->|No| H
-    F --> H
-    G --> H
+  %% Workflow connections
+  A --> B
+  B -->|🎙️ Voice| C
+  B -->|✍️ Text| G
+  C --> D
+  D --> E
+  E -->|✅ Needs Cleaning| F
+  E -->|🚫 Clean| H
+  F --> H
+  G --> H
 
-    %% Subgraph for Lead Agent components
-    subgraph Components["Lead Agent Components"]
-        H -- memory --> I
-        H -- model --> J
-        H -- tool --> K
-        H -- tool --> L
-    end
+  %% Lead Agent components
+  subgraph 🧩 Components
+    H -- 🧠 memory --> I
+    H -- 🤖 model --> J
+    H -- 🔎 tool --> K
+    H -- 🔗 tool --> L
+  end
 
-    %% Output paths
-    H --> M
-    H --> N
+  %% Output paths
+  H --> M
+  H --> N
 ```
-
 ---
 
 # 🧩 Workflow Details
