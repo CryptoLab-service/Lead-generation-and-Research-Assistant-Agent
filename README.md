@@ -12,13 +12,12 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 
 ## Workflow Diagram
 
-```mermaid
 flowchart TD
     %% Define styles
     classDef start fill:#f9f,stroke:#333,stroke-width:2px;
     classDef process fill:#ffc,stroke:#333,stroke-width:2px;
     classDef decision fill:#cfc,stroke:#333,stroke-width:2px;
-    classDef end fill:#bbf,stroke:#333,stroke-width:2px;
+    classDef output fill:#bbf,stroke:#333,stroke-width:2px;
     classDef component fill:#fcf,stroke:#333,stroke-width:1px;
 
     %% Define all nodes
@@ -37,8 +36,8 @@ flowchart TD
     J[Google Gemini Chat Model\nProvides AI responses]:::component
     K[leadScraping Tool\nScrapes leads based\non criteria]:::component
     L[leadResearch Tool\nResearched LinkedIn\nprofiles]:::component
-    M[Response\nSends back successful\nresponses]:::end
-    N[Error Response\nHandles error cases]:::end
+    M[Response\nSends back successful\nresponses]:::output
+    N[Error Response\nHandles error cases]:::output
 
     %% Voice path
     A --> B
@@ -69,21 +68,6 @@ flowchart TD
     %% Response paths
     H --> M
     H --> N
-
-    %% Legend using standard Mermaid notes
-    linkStyle default stroke:#000,stroke-width:1px;
-
-    %% Add a legend using notes
-    classDef legend fill:#fff,stroke:#000,stroke-width:1px;
-    note1(("Start: Pink\nTelegram input")):::legend
-    note2(("Process: Yellow\nMain workflow steps")):::legend
-    note3(("Decision: Green\nSwitch/routers")):::legend
-    note4(("Component: Purple\nAgent subsystems")):::legend
-    note5(("End: Blue\nOutput nodes")):::legend
-
-    %% Position the legend at bottom
-    note1 -.- note2 -.- note3 -.- note4 -.- note5
-```
 
 ---
 
