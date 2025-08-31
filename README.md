@@ -1,3 +1,15 @@
+``` mermaid 
+flowchart TD
+  A[⏰ Schedule Trigger<br>Every 5–10 mins] --> B[📄 Read Endpoints<br>from Google Sheets]
+  B --> C[🔁 Split In Batches<br>Iterate Each Endpoint]
+  C --> D[🌐 HTTP Request<br>Send API Call]
+  D --> E[🧮 Evaluate Response<br>Status Code & Latency]
+  E --> F{❌ Issue Detected?}
+  F -- Yes --> G[🚨 Alert Team<br>Slack / Telegram / SMS]
+  F -- No --> H[✅ All Good<br>Continue Monitoring]
+  G --> I[📝 Log Incident<br>to API Health Log Sheet]
+  H --> I
+```
 # Lead Generation and Research Assistant Agent
 
 An AI-powered assistant for lead generation and research, integrated with Telegram for voice and text interactions, with Google Gemini for transcription and chat capabilities.
