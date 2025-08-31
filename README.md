@@ -12,7 +12,6 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 
 ## Workflow Diagram
 
-```mermaid
 flowchart TD
     %% Define styles
     classDef start fill:#f9f,stroke:#333,stroke-width:2px;
@@ -21,7 +20,7 @@ flowchart TD
     classDef end fill:#bbf,stroke:#333,stroke-width:2px;
     classDef component fill:#fcf,stroke:#333,stroke-width:1px;
 
-    %% Define all nodes with descriptions
+    %% Define all nodes
     A[Telegram Trigger\nReceives messages from Telegram]:::start
     B{"Voice or Text\nSwitch node"}:::decision
     C[Download File\nDownloads voice message file]:::process
@@ -29,7 +28,10 @@ flowchart TD
     E{"Check for noise\nDetects if transcription needs cleaning"}:::decision
     F[Clean transcription\nRemoves timestamps and annotations]:::process
     G[Text\nHandles text messages directly]:::process
+    LogCleaned[Log Cleaned Input\nStores cleaning status]:::process
+    LogRaw[Log Raw Input\nStores raw input status]:::process
     H["Lead Agent\nMain AI agent that processes requests"]:::process
+    RetryTool[Retry Failed Tool\nRetries scraping/research tool]:::process
     I[Simple Memory\nStores conversation context]:::component
     J[Google Gemini Chat Model\nProvides AI responses]:::component
     K[leadScraping Tool\nScrapes leads based on criteria]:::component
@@ -43,8 +45,8 @@ flowchart TD
     C --> D
     D --> E
     E -->|Needs Cleaning| F
-    E -->|Clean| H
-    F --> H
+    F --> LogCleaned --> H
+    E -->|Clean| LogRaw --> H
 
     %% Text path
     B -->|Text| G
@@ -59,6 +61,10 @@ flowchart TD
         H -- ai_tool --> L
     end
 
+    %% Retry mechanism
+    H -->|Tool Failed| RetryTool --> H
+    RetryTool -->|Still Fails| N
+
     %% Response paths
     H --> M
     H --> N
@@ -72,7 +78,75 @@ flowchart TD
       |Component: Agent subsystems|
       |End: Output nodes|
     end
-```
+
+# 🧩 Workflow Details
+
+This workflow is designed to handle Telegram-based input and process both voice and text messages using AI-powered tools. It includes modular components for transcription, cleaning, lead generation, and error handling.
+
+---
+
+## 🔹 Input Handling
+
+- **Telegram Trigger**: Receives incoming messages from Telegram.
+- **Voice or Text Switch Node**: Determines whether the message is a voice or text input and routes accordingly.
+
+---
+
+## 🔊 Voice Processing Path
+
+- **Download File Node**: Downloads the voice message file.
+- **Transcribe a Recording Node**: Uses Google Gemini to transcribe the audio.
+- **Check for Noise Node**: Detects whether the transcription contains noise or formatting issues.
+- **Clean Transcription Node**: Removes timestamps, annotations, and other noise from the transcription.
+- **Lead Agent**: Receives the cleaned text and processes the request.
+
+---
+
+## 💬 Text Processing Path
+
+- **Text Node**: Directly forwards text messages to the Lead Agent for processing.
+
+---
+
+## 🧠 Lead Agent
+
+The Lead Agent is the core AI component responsible for understanding and responding to user requests.
+
+### Integrated Components:
+
+- **Google Gemini Chat Model**: Generates intelligent responses.
+- **Simple Memory Node**: Maintains conversation context for continuity.
+- **leadScraping Tool**: Scrapes leads based on user-defined criteria.
+- **leadResearch Tool**: Researches LinkedIn profiles for enriched lead data.
+
+---
+
+## 📤 Output Handling
+
+- **Response Node**: Sends successful responses back to the user.
+- **Error Response Node**: Handles and returns error messages when something goes wrong.
+
+---
+
+## 🌟 Key Features
+
+- **Multi-modal Input**: Seamlessly supports both voice and text messages.
+- **Automatic Transcription**: Converts voice messages into readable text.
+- **Text Cleaning**: Removes unnecessary formatting and noise from transcriptions.
+- **Modular Design**: Each component is isolated for easy updates and maintenance.
+- **Error Handling**: Dedicated error path ensures graceful failure management.
+- **Memory Support**: Maintains context across interactions for smarter responses.
+
+---
+
+## 🛠️ Customization Points
+
+- Modify the **Clean Transcription Node** to adjust how noise and formatting are removed.
+- Add new tools to the **Lead Agent** by connecting additional nodes.
+- Customize the **system prompt** in the Lead Agent to change its behavior or personality.
+- Adjust formatting logic in the **Response** and **Error Response** nodes to suit your output style.
+
+---
 
 ## System Requirements
 
