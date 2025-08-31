@@ -15,71 +15,52 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 ```mermaid
 flowchart TD
     %% Define styles
-    classDef start fill:#f9f,stroke:#333,stroke-width:2px;
-    classDef process fill:#ffc,stroke:#333,stroke-width:2px;
-    classDef decision fill:#cfc,stroke:#333,stroke-width:2px;
-    classDef end fill:#bbf,stroke:#333,stroke-width:2px;
-    classDef component fill:#fcf,stroke:#333,stroke-width:1px;
+    classDef start fill:#f9f,stroke:#333;
+    classDef process fill:#ffc,stroke:#333;
+    classDef decision fill:#cfc,stroke:#333;
+    classDef end fill:#bbf,stroke:#333;
+    classDef component fill:#fcf,stroke:#333;
 
     %% Define all nodes with descriptions
-    A[Telegram Trigger<br>Receives messages from Telegram]:::start
-    B{Vice or Text<br>Switch node}:::decision
-    C[Download File<br>Downloads voice message file]:::process
-    D[Transcribe a recording<br>Uses Google Gemini to transcribe]:::process
-    E{Check for noise<br>Detects if transcription needs cleaning}:::decision
-    F[Clean transcription<br>Removes timestamps and annotations]:::process
-    G[Text<br>Handles text messages directly]:::process
-    LogCleaned[Log Cleaned Input<br>Stores cleaning status]:::process
-    LogRaw[Log Raw Input<br>Stores raw input status]:::process
-    H["Lead Agent<br>Main AI agent that processes requests"]:::process
-    RetryTool[Retry Failed Tool<br>Retries scraping/research tool]:::process
-    I[Simple Memory<br>Stores conversation context]:::component
-    J[Google Gemini Chat Model<br>Provides AI responses]:::component
-    K[leadScraping Tool<br>Scrapes leads based on criteria]:::component
-    L[leadResearch Tool<br>Researched LinkedIn profiles]:::component
-    M[Response<br>Sends back successful responses]:::end
-    N[Error Response<br>Handles error cases]:::end
+    A[Telegram Trigger<br>Receives messages]:::start
+    B{Vice or Text?<br>Switch node}:::decision
+    C[Download File<br>Voice file]:::process
+    D[Transcribe<br>Google Gemini]:::process
+    E{Needs Cleaning?<br>Check noise}:::decision
+    F[Clean Text<br>Remove timestamps]:::process
+    G[Text Input<br>Direct handling]:::process
+    H[Lead Agent<br>Main AI]:::process
+    I[Memory<br>Conversation context]:::component
+    J[Chat Model<br>Google Gemini]:::component
+    K[leadScraping<br>Search tool]:::component
+    L[leadResearch<br>LinkedIn tool]:::component
+    M[Response<br>Success output]:::end
+    N[Error<br>Response]:::end
 
-    %% Voice path
+    %% Connections
     A --> B
     B -->|Voice| C
+    B -->|Text| G
     C --> D
     D --> E
-    E -->|Needs Cleaning| F
-    F --> LogCleaned --> H
-    E -->|Clean| LogRaw --> H
-
-    %% Text path
-    B -->|Text| G
+    E -->|Yes| F
+    E -->|No| H
+    F --> H
     G --> H
 
-    %% Lead Agent components
-    subgraph LeadAgentComponents["Lead Agent Components"]
-        direction TB
-        H -- ai_memory --> I
-        H -- ai_languageModel --> J
-        H -- ai_tool --> K
-        H -- ai_tool --> L
+    %% Subgraph for Lead Agent components
+    subgraph Components["Lead Agent Components"]
+        H -- memory --> I
+        H -- model --> J
+        H -- tool --> K
+        H -- tool --> L
     end
 
-    %% Retry mechanism
-    H -->|Tool Failed| RetryTool --> H
-    RetryTool -->|Still Fails| N
-
-    %% Response paths
+    %% Output paths
     H --> M
     H --> N
-
-    %% Add a legend
-    legend
-      |<b>Legend</b>|
-      |Start: Telegram input|
-      |Decision: Switch/routers|
-      |Process: Main workflow steps|
-      |Component: Agent subsystems|
-      |End: Output nodes|
-    end
 ```
+
 ---
 
 # 🧩 Workflow Details
