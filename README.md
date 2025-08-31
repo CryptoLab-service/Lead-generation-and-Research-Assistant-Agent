@@ -12,6 +12,7 @@ An AI-powered assistant for lead generation and research, integrated with Telegr
 
 ## Workflow Diagram
 
+```mermaid
 flowchart TD
     %% Define styles
     classDef start fill:#f9f,stroke:#333,stroke-width:2px;
@@ -21,22 +22,22 @@ flowchart TD
     classDef component fill:#fcf,stroke:#333,stroke-width:1px;
 
     %% Define all nodes
-    A[Telegram Trigger\nReceives messages from Telegram]:::start
+    A[Telegram Trigger\nReceives messages\nfrom Telegram]:::start
     B{"Voice or Text\nSwitch node"}:::decision
-    C[Download File\nDownloads voice message file]:::process
-    D[Transcribe a recording\nUses Google Gemini to transcribe]:::process
-    E{"Check for noise\nDetects if transcription needs cleaning"}:::decision
-    F[Clean transcription\nRemoves timestamps and annotations]:::process
-    G[Text\nHandles text messages directly]:::process
+    C[Download File\nDownloads voice\nmessage file]:::process
+    D[Transcribe a recording\nUses Google Gemini\nto transcribe]:::process
+    E{"Check for noise\nDetects if\ntranscription needs\ncleaning"}:::decision
+    F[Clean transcription\nRemoves timestamps\nand annotations]:::process
+    G[Text\nHandles text\nmessages directly]:::process
     LogCleaned[Log Cleaned Input\nStores cleaning status]:::process
     LogRaw[Log Raw Input\nStores raw input status]:::process
-    H["Lead Agent\nMain AI agent that processes requests"]:::process
+    H["Lead Agent\nMain AI agent that\nprocesses requests"]:::process
     RetryTool[Retry Failed Tool\nRetries scraping/research tool]:::process
     I[Simple Memory\nStores conversation context]:::component
     J[Google Gemini Chat Model\nProvides AI responses]:::component
-    K[leadScraping Tool\nScrapes leads based on criteria]:::component
-    L[leadResearch Tool\nResearched LinkedIn profiles]:::component
-    M[Response\nSends back successful responses]:::end
+    K[leadScraping Tool\nScrapes leads based\non criteria]:::component
+    L[leadResearch Tool\nResearched LinkedIn\nprofiles]:::component
+    M[Response\nSends back successful\nresponses]:::end
     N[Error Response\nHandles error cases]:::end
 
     %% Voice path
@@ -69,16 +70,20 @@ flowchart TD
     H --> M
     H --> N
 
-    %% Add a legend
-    legend
-      |<b>Legend</b>|
-      |Start: Telegram input|
-      |Decision: Switch/routers|
-      |Process: Main workflow steps|
-      |Component: Agent subsystems|
-      |End: Output nodes|
-    end
+    %% Legend using standard Mermaid notes
+    linkStyle default stroke:#000,stroke-width:1px;
 
+    %% Add a legend using notes
+    classDef legend fill:#fff,stroke:#000,stroke-width:1px;
+    note1(("Start: Pink\nTelegram input")):::legend
+    note2(("Process: Yellow\nMain workflow steps")):::legend
+    note3(("Decision: Green\nSwitch/routers")):::legend
+    note4(("Component: Purple\nAgent subsystems")):::legend
+    note5(("End: Blue\nOutput nodes")):::legend
+
+    %% Position the legend at bottom
+    note1 -.- note2 -.- note3 -.- note4 -.- note5
+```
 # 🧩 Workflow Details
 
 This workflow is designed to handle Telegram-based input and process both voice and text messages using AI-powered tools. It includes modular components for transcription, cleaning, lead generation, and error handling.
