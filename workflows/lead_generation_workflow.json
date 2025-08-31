@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    // The complete workflow configuration you provided
+    {
+      "parameters": {
+        "name": "leadScraping",
+        "description": "=Call this tool to scrape leads once you have enough details about the search query. \n\nYour input must be in json like this: \n\n[\n  {\n    \"location\": [\n      \"LOCATION1+HERE\",\n      \"LOCATION2+HERE\",\n      ...\n    ],\n    \"business\": [\n      \"BUSINESS1+HERE\",\n      \"BUSINESS2+HERE\",\n      ...\n    ],\n    \"job_title\": [\n      \"TITLE1+HERE\",\n      \"TITLE2+HERE\",\n      ...\n    ]\n  }\n]",
+        "workflowId": {
+          "__rl": true,
+          "value": "QevwTWErLIVV9QU9",
+          "mode": "list",
+          "cachedResultName": "Lead Scraping - 2.0"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        1120,
+        240
+      ],
+      "id": "a247220a-e4e8-479c-86b9-ab2c94c199f8",
+      "name": "leadScraping"
+    },
+    {
+      "parameters": {
+        "name": "leadResearch",
+        "description": "Call this tool to research leads. the input should be their linkedin URL in the following format: \n\n{\n\"linkedinURL\": \"[URL-HERE]\"\n}",
+        "workflowId": {
+          "__rl": true,
+          "value": "khkVliajNkTC7PEQ",
+          "mode": "list",
+          "cachedResultName": "Lead Research"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2,
+      "position": [
+        1248,
+        240
+      ],
+      "id": "dd017138-fe1b-45d7-b2a7-34edb963d05b",
+      "name": "leadResearch"
+    },
+    // ... (rest of your workflow configuration)
+  ],
+  "connections": {
+    // ... (your workflow connections)
+  },
+  "pinData": {},
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "d492b0d52078d29e9020d34236d73874f01aab2d933204cdeb0eddc4b99bb389"
+  }
+}
